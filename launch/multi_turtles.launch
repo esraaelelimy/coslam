@@ -30,7 +30,9 @@
       <param name="publish_frequency" type="double" value="50.0" />
       <param name="tf_prefix" value="$(arg turtle_0)" />
     </node>
-    
+    <node pkg="coslam" type="turtlebot_teleop_key" name="turtlebot_teleop_key" output="screen" launch-prefix="xterm -e" >
+      <remap from="/cmd_vel" to="/t_0/cmd_vel" />
+    </node>
     <node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model" args="-urdf -model $(arg turtle_0) -x $(arg turtle_0_x_pos) -y $(arg turtle_0_y_pos) -z $(arg turtle_0_z_pos) -Y $(arg turtle_0_yaw) -param robot_description" />
   </group>
 
@@ -44,6 +46,8 @@
 
     <node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model" args="-urdf -model $(arg turtle_1) -x $(arg turtle_1_x_pos) -y $(arg turtle_1_y_pos) -z $(arg turtle_1_z_pos) -Y $(arg turtle_1_yaw) -param robot_description" />
   </group>
-
+  <node pkg="coslam" type="turtlebot_teleop_key" name="turtlebot_teleop_key" output="screen" launch-prefix="xterm -e">
+    <remap from="/cmd_vel" to="/t_1/cmd_vel" />
+  </node>
 
 </launch>

@@ -162,7 +162,7 @@
     </inertial>
   </link>
 
-  <joint name="kinect_joint" type="fixed">
+  <!--joint name="kinect_joint" type="fixed">
     <parent link="base_link"/>
     <child link="kinect_link"/>
     <origin xyz="-0.032 0 0.2" rpy="0 0 0"/>
@@ -191,7 +191,7 @@
                iyy="0.001" iyz="0.0"
                izz="0.001" />
     </inertial>
-  </link>
+  </link-->
 
 
 </robot>
