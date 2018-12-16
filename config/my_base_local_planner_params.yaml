@@ -1,0 +1,9 @@
+controller_frequency : 4.0
+TrajectoryPlannerROS:
+
+  holonomic_robot: false
+  sim_time : 1.0
+  meter_scoring : true
+  pdist_scale : 1.0
+  xy_goal_tolerance : 0.05
+  max_vel_theta : 0.4
