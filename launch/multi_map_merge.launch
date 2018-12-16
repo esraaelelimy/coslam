@@ -1,0 +1,48 @@
+<launch>
+  <arg name="turtle_0"  default="t_0"/>
+  <arg name="turtle_1" default="t_1"/>
+
+
+  <arg name="turtle_0_x_pos" default="-7.0"/>
+  <arg name="turtle_0_y_pos" default="-1.0"/>
+  <arg name="turtle_0_z_pos" default=" 0.0"/>
+  <arg name="turtle_0_yaw"   default=" 1.57"/>
+
+  <arg name="turtle_1_x_pos" default=" 7.0"/>
+  <arg name="turtle_1_y_pos" default="-1.0"/>
+  <arg name="turtle_1_z_pos" default=" 0.0"/>
+  <arg name="turtle_1_yaw"   default=" 1.57"/>
+
+
+  <group ns="$(arg turtle_0)/map_merge">
+    <param name="init_pose_x"   value="$(arg turtle_0_x_pos)"/>
+    <param name="init_pose_y"   value="$(arg turtle_0_y_pos)"/>
+    <param name="init_pose_z"   value="$(arg turtle_0_z_pos)"/>
+    <param name="init_pose_yaw" value="$(arg turtle_0_yaw)"  />
+  </group>
+
+  <group ns="$(arg turtle_1)/map_merge">
+    <param name="init_pose_x"   value="$(arg turtle_1_x_pos)"/>
+    <param name="init_pose_y"   value="$(arg turtle_1_y_pos)"/>
+    <param name="init_pose_z"   value="$(arg turtle_1_z_pos)"/>
+    <param name="init_pose_yaw" value="$(arg turtle_1_yaw)"  />
+  </group>
+
+
+  <node pkg="multirobot_map_merge" type="map_merge" respawn="false" name="map_merge" output="screen">
+    <param name="robot_map_topic" value="map"/>
+    <param name="robot_namespace" value="t"/>
+    <param name="merged_map_topic" value="map"/>
+    <param name="world_frame" value="map"/>
+    <param name="known_init_poses" value="true"/>
+    <param name="merging_rate" value="0.5"/>
+    <param name="discovery_rate" value="0.05"/>
+    <param name="estimation_rate" value="0.1"/>
+    <param name="estimation_confidence" value="1.0"/>
+  </node>
+
+  <node pkg="tf" type="static_transform_publisher" name="world_to_$(arg turtle_0)_tf_broadcaster"  args="0 0 0 0 0 0 /map /$(arg turtle_0)/map 100"/>
+  <node pkg="tf" type="static_transform_publisher" name="world_to_$(arg turtle_1)_tf_broadcaster" args="0 0 0 0 0 0 /map /$(arg turtle_1)/map 100"/>
+</launch>
+
+<!-- http://wiki.ros.org/multirobot_map_merge -->
