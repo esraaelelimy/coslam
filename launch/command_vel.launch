@@ -1,0 +1,7 @@
+<launch>
+<arg name="set_cmd_vel"  default="cmd_vel"/>
+
+<node pkg="coslam" type="turtlebot_teleop_key" name="turtlebot_teleop_key" output="screen">
+    <param name="cmd_vel" value="$(arg set_cmd_vel)"/>
+</node>
+</launch>

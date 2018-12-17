@@ -1,0 +1,47 @@
+<launch>
+  
+  <arg name="turtle_0"  default="t_0"/>
+  <arg name="turtle_1"  default="t_1"/>
+  
+
+  <arg name="turtle_0_x_pos" default="1.0"/>
+  <arg name="turtle_0_y_pos" default="1.0"/>
+  <arg name="turtle_0_yaw"   default=" 1.57"/>
+
+  <arg name="turtle_1_x_pos" default=" 1.0"/>
+  <arg name="turtle_1_y_pos" default="-1.0"/>
+  <arg name="turtle_1_yaw"   default=" 1.57"/>
+
+
+ <include file="$(find gazebo_ros)/launch/empty_world.launch">
+    <arg name="world_name" value="$(find coslam)/worlds/large_world.world"/>
+    <arg name="paused" value="false"/>
+    <arg name="use_sim_time" value="true"/>
+    <arg name="gui" value="true"/>
+    <arg name="headless" value="false"/>
+    <arg name="debug" value="false"/>
+  </include>>  
+
+  <group ns = "$(arg turtle_0)">
+    <param name="robot_description" command="$(find xacro)/xacro --inorder $(find coslam)/urdf/turtlebot3_burger.urdf.xacro" />
+
+    <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher" output="screen">
+      <param name="publish_frequency" type="double" value="50.0" />
+      <param name="tf_prefix" value="$(arg turtle_0)" />
+    </node>
+
+    <node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model" args="-urdf -model $(arg turtle_0) -x $(arg turtle_0_x_pos) -y $(arg turtle_0_y_pos)  -Y $(arg turtle_0_yaw) -param robot_description" />
+  </group>
+
+  <group ns = "$(arg turtle_1)">
+    <param name="robot_description" command="$(find xacro)/xacro --inorder $(find coslam)/urdf/turtlebot3_burger.urdf.xacro" />
+
+    <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher" output="screen">
+      <param name="publish_frequency" type="double" value="50.0" />
+      <param name="tf_prefix" value="$(arg turtle_1)" />
+    </node>
+  
+    <node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model" args="-urdf -model $(arg turtle_1) -x $(arg turtle_1_x_pos) -y $(arg turtle_1_y_pos)  -Y $(arg turtle_1_yaw) -param robot_description" />
+  </group>
+
+</launch>
